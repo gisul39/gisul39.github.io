@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Gisul 39</title>
+    <link>https://gisul39.github.io/</link>
+    <description>AIやソフトウェア開発に関する最新情報</description>
+    <language>ja</language>
+    <lastBuildDate>Sat, 21 Feb 2026 00:00:00 +0900</lastBuildDate>
+
+    <item>
+      <title>AIによる攻撃と詐欺が急増する裏で、一体何が起きているのか</title>
+      <link>https://gisul39.github.io/docs.html?file=2</link>
+      <guid>https://gisul39.github.io/docs.html?file=2</guid>
+      <pubDate>Sat, 21 Feb 2026 00:00:00 +0900</pubDate>
+      <description>AIによる攻撃と詐欺の現状についての考察。</description>
+    </item>
+
+    <item>
+      <title>AIはソフトウェア開発を本当に高速化するのか？幻想と現実のはざまで考える開発の未来</title>
+      <link>https://gisul39.github.io/docs.html?file=1</link>
+      <guid>https://gisul39.github.io/docs.html?file=1</guid>
+      <pubDate>Sat, 21 Feb 2026 00:00:00 +0900</pubDate>
+      <description>AIがソフトウェア開発にもたらす影響と未来像について。</description>
+    </item>
+
+  </channel>
+</rss>
