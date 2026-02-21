@@ -2,21 +2,26 @@ const output = document.getElementById('output');
 const params = new URLSearchParams(window.location.search);
 const fileName = params.get('file');
 
-// 1. メタ情報・ファビコンの設定
+
 function setupMeta(title, description) {
     document.title = `${title} | Gisul39`;
-    let favicon = document.querySelector('link[rel="icon"]');
+
+    // ファビコンの設定 (./fav.png を使用)
+    let favicon = document.querySelector('link[rel="icon"]') || document.querySelector('link[rel="shortcut icon"]');
     if (!favicon) {
         favicon = document.createElement('link');
         favicon.rel = 'icon';
         document.head.appendChild(favicon);
     }
-    favicon.href = './icon.png';
+    // 指定のパスに変更
+    favicon.href = './fav.png';
+    favicon.type = 'image/png'; // PNG形式であることを明示
 
     const metaData = [
         { name: 'description', content: description },
         { property: 'og:title', content: `${title} | Gisul39` },
         { property: 'og:description', content: description },
+        { property: 'og:image', content: `./fav.png` }, // SNS共有時などのアイコンにも指定しておくと親切です
         { name: 'twitter:card', content: 'summary_large_image' }
     ];
 
