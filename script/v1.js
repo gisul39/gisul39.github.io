@@ -94,7 +94,7 @@ baseStyle.textContent = `
         color: var(--text);
         margin: 0; padding: 0;
         line-height: 1.9;
-        transition: all 0.3s ease;
+        transition: all 0.6s cubic-bezier(0.25, 0.19, 0, 1);
     }
     .global-header {
         position: fixed; top: 0; left: 0; width: 100%;
