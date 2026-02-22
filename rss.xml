@@ -5,13 +5,21 @@
     <link>https://gisul39.github.io/</link>
     <description>AIやソフトウェア開発に関する最新情報</description>
     <language>ja</language>
-    <lastBuildDate>Sat, 21 Feb 2026 00:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 22 Feb 2026 00:00:00 +0900</lastBuildDate>
+
+    <item>
+      <title>人型ロボット。「一家に一台」のカウントダウン</title>
+      <link>https://gisul39.github.io/docs.html?file=5</link>
+      <guid>https://gisul39.github.io/docs.html?file=5</guid>
+      <pubDate>Sun, 22 Feb 2026 00:00:00 +0900</pubDate>
+      <description>2026年から2027年にかけて、世界は人型ロボット産業における転換点を迎えようとしている。</description>
+    </item>
 
     <item>
       <title>AI時代におけるハルシネーションとの付き合い方</title>
       <link>https://gisul39.github.io/docs.html?file=4</link>
       <guid>https://gisul39.github.io/docs.html?file=4</guid>
-      <pubDate>Sat, 22 Feb 2026 00:00:00 +0900</pubDate>
+      <pubDate>Sun, 22 Feb 2026 00:00:00 +0900</pubDate>
       <description>ChatGPTやClaudeなどのAIツールが登場して以来、開発者の仕事は大きく変わろうとしています。</description>
     </item>
 
@@ -19,7 +27,7 @@
       <title>AI導入の期待値と現実のマネジメント</title>
       <link>https://gisul39.github.io/docs.html?file=3</link>
       <guid>https://gisul39.github.io/docs.html?file=3</guid>
-      <pubDate>Sat, 22 Feb 2026 00:00:00 +0900</pubDate>
+      <pubDate>Sun, 22 Feb 2026 00:00:00 +0900</pubDate>
       <description>ここ数年、ソフトウェア開発にAIを導入すれば、開発時間が大幅に短縮され、エンジニアの生産性が飛躍的に向上するという期待が、経営層の間で広がっています。</description>
     </item>
 
