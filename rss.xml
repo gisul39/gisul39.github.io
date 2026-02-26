@@ -5,7 +5,15 @@
     <link>https://gisul39.github.io/</link>
     <description>AIやソフトウェア開発に関する最新情報</description>
     <language>ja</language>
-    <lastBuildDate>Sun, 22 Feb 2026 00:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 26 Feb 2026 00:00:00 +0900</lastBuildDate>
+
+    <item>
+      <title>AIを使ったコーディングがこんなに疲れさせるワケ</title>
+      <link>https://gisul39.github.io/docs.html?file=6</link>
+      <guid>https://gisul39.github.io/docs.html?file=6</guid>
+      <pubDate>Sun, 26 Feb 2026 00:00:00 +0900</pubDate>
+      <description>AIを活用したコーディングは、一見すると開発の効率化をもたらすはずだった。</description>
+    </item>
 
     <item>
       <title>人型ロボット。「一家に一台」のカウントダウン</title>
