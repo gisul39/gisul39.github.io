@@ -1,3 +1,4 @@
+<!--まともでないなら殺す-->
 <!doctype html>
 <html lang="ja">
 <head>
@@ -10,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
   <link rel="icon" href="icon.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
 
   <script type="importmap">
     {
@@ -21,269 +23,6 @@
   <script type="module">
     import '@material/web/all.js';
   </script>
-
-  <style>
-    :root {
-      --md-sys-color-primary: #1a73e8;
-      --md-sys-color-on-primary: #fff;
-      --md-sys-color-primary-container: #d9e8ff;
-      --md-sys-color-on-primary-container: #0a3d7a;
-      --md-sys-color-surface: #f8f9fb;
-      --md-sys-color-surface-container: #fff;
-      --md-sys-color-surface-container-low: #f1f3f4;
-      --md-sys-color-surface-container-high: #eef0f3;
-      --md-sys-color-on-surface: #202124;
-      --md-sys-color-on-surface-variant: #5f6368;
-      --md-sys-color-outline: #dadce0;
-      --md-sys-color-outline-variant: #e8eaed;
-      --sidebar-width: 248px;
-      font-family: "Roboto", "Noto Sans JP", system-ui, sans-serif;
-    }
-
-    * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; }
-    body { background: #f1f3f4; color: var(--md-sys-color-on-surface); }
-    button, input, textarea { font: inherit; }
-    .material-symbols-outlined { font-family: "Material Symbols Outlined"; font-weight: normal; font-style: normal; font-size: 20px; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-feature-settings: "liga"; -webkit-font-smoothing: antialiased; }
-
-    .app {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
-    }
-
-    /* Sidebar: Google Ads / Ads UI style is intentionally avoided. This uses the supplied Google-like navigation reference. */
-    .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: 18px 24px 18px;
-      background: #ffffff;
-      border-right: 0;
-      min-width: 0;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      min-height: 52px;
-      padding: 0 0 26px;
-      margin: 0;
-      gap:8px;
-    }
-    .brand-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      background-image: url('icon.png');
-      background-size: cover;
-      background-position: center;
-      flex: 0 0 auto;
-    }
-    .brand-title { font-weight:bold; font-size:16px; }
-    .sidebar-label {
-      color: #3c4043;
-      font-size: 15px;
-      font-weight: 500;
-      padding: 8px 22px 12px;
-    }
-    .tab-list { display: flex; flex-direction: column; gap: 4px; overflow: auto; padding: 0 0 10px; }
-    .workspace-tab {
-      border: 0;
-      width: 100%;
-      min-height: 50px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0 20px;
-      border-radius: 16px;
-      background: transparent;
-      color: #202124;
-      cursor: pointer;
-      text-align: left;
-      transition: background .3s ease;
-    }
-    .workspace-tab:hover { background: rgba(255,255,255,.62); }
-    .workspace-tab.active-shell { background: #fff; padding: 8px; min-height: auto; border-radius: 24px; }
-    .workspace-tab.active {
-      background: #1a73e8;
-      color: #fff;
-      min-height: 50px;
-      padding: 0 20px;
-      border-radius: 25px;
-    }
-    .workspace-tab .tab-icon { font-size: 20px; color: #6b7075; flex: 0 0 auto; }
-    .workspace-tab.active .tab-icon { color: #fff; }
-    .workspace-tab .tab-name { min-width: 0; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 15px; }
-    .workspace-tab .count { font-size: 12px; color: #7a7f83; }
-    .workspace-tab.active .count { color: rgba(255,255,255,.88); }
-    .sidebar-bottom { margin-top: auto; padding: 18px 6px 2px; border-top: 1px solid #dadce0; }
-    #addWorkspaceBtn { width: 100%; --md-outlined-button-container-height: 44px; }
-
-    /* Main layout */
-    .main {
-      min-width: 0;
-      min-height: 100vh;
-      padding: 28px clamp(28px, 5vw, 72px) 56px;
-    }
-    .main-inner { width: min(1120px, 100%); margin: 0 auto; }
-
-    .page-head {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 6px 2px 16px;
-      border-bottom: 1px solid var(--md-sys-color-outline-variant);
-    }
-    .page-head-copy { min-width: 0; flex: 1; }
-    .eyebrow { color: #70757a; font-size: 12px; margin-bottom: 5px; }
-    .page-title { margin: 0; font-size: clamp(26px, 3vw, 34px); line-height: 1.2; font-weight: 500; letter-spacing: -.5px; }
-    .page-actions { display: flex; align-items: center; gap: 8px; padding-top: 2px; }
-
-    .memo-area { padding: 18px 0 16px; }
-    .memo-box {
-      width: 100%;
-      min-height: 48px;
-      resize: vertical;
-      border: 1px solid var(--md-sys-color-outline);
-      border-radius: 14px;
-      background: #fff;
-      padding: 13px 14px;
-      outline: none;
-      color: #202124;
-      line-height: 1.7;
-      box-shadow: 0 1px 2px rgba(60,64,67,.06);
-      transition: border-color .15s, box-shadow .15s;
-    }
-    .memo-box:focus { border-color: #1a73e8; box-shadow: 0 0 0 1px #1a73e8; }
-    .memo-box::placeholder { color: #9aa0a6; }
-
-    .links-panel {
-      display:block
-    }
-    .links-head {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding-bottom: 10px;
-    }
-    .links-head-title { flex: 1; min-width: 0; }
-    .links-head-title strong { font-size: 15px; font-weight: 600; }
-    .links-head-title span { margin-left: 8px; color: #80868b; font-size: 12px; }
-    #addLinkBtn { --md-outlined-button-container-height: 38px; --md-outlined-button-leading-icon-size: 18px; }
-    #addLinkBtn .material-symbols-outlined { font-size: 18px; }
-    .link-list {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      border-radius: 16px;
-      overflow:hidden;
-    }
-    .link-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 8px;
-      border-radius: 4px;
-      transition: background .15s ease;
-      background: #ffffff;
-    }
-    .link-row:hover { background: #eceeef; }
-    .link-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 99px;
-      background: #f6f8fa;
-      display: grid;
-      place-items: center;
-      flex: 0 0 38px;
-      overflow: hidden;
-    }
-    .link-icon img { width: 22px; height: 22px; object-fit: contain; }
-    .link-main { min-width: 0; flex: 1; cursor: pointer; }
-    .link-title { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .link-url { margin-top: 3px; color: #80868b; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .row-actions { display: flex; align-items: center; position: relative; }
-    .menu-button { --md-icon-button-icon-size: 20px; --md-icon-button-state-layer-size: 40px; }
-    md-menu { position: fixed; z-index: 1000; }
-
-    .empty { padding: 46px 24px 52px; text-align: center; color: #5f6368; }
-    .empty-icon { width: 52px; height: 52px; border-radius: 16px; background: #eef4ff; color: #1a73e8; display: grid; place-items: center; margin: 0 auto; }
-    .empty strong { display: block; margin-top: 14px; color: #3c4043; font-weight: 600; }
-    .empty p { margin: 8px auto 18px; max-width: 430px; font-size: 13px; line-height: 1.65; }
-
-    /* Material Web dialog. Keep the content in the explicit `content` slot so it renders reliably. */
-    md-dialog {
-      --md-dialog-container-color: #fff;
-      --md-dialog-container-shape: 28px;
-      --md-dialog-headline-color: #202124;
-      --md-dialog-supporting-text-color: #5f6368;
-      --md-dialog-container-elevation-shadow: 0 24px 70px rgba(32,33,36,.24);
-      --md-dialog-container-max-width: min(520px, calc(100vw - 32px));
-    }
-    .dialog-body { display: flex; flex-direction: column; gap: 18px; padding: 2px 24px 8px; min-width: min(430px, calc(100vw - 80px)); box-sizing: border-box; }
-    .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; padding: 8px 8px 8px 0; }
-
-    /* Mobile: top app bar + board strip + comfortable touch targets. */
-    @media (max-width: 760px) {
-      :root { --sidebar-width: 100%; }
-      .app { display: block; min-height: 100svh; }
-      .sidebar {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        height: auto;
-        padding: max(10px, env(safe-area-inset-top)) 12px 10px;
-        background: rgba(241,243,244,.96);
-        backdrop-filter: blur(18px);
-        border-bottom: 1px solid #dadce0;
-      }
-      .brand { min-height: 40px; padding: 0 4px 8px; }
-      .brand-mark { width: 28px; height: 28px; border-radius: 9px; }
-      .sidebar-label { display: block; padding: 6px 4px 7px; font-size: 12px; color: #5f6368; }
-      .tab-list { flex-direction: row; gap: 8px; overflow-x: auto; overflow-y: hidden; padding: 0 0 3px; scrollbar-width: none; }
-      .tab-list::-webkit-scrollbar { display: none; }
-      .workspace-tab,
-      .workspace-tab.active {
-        min-height: 42px;
-        max-width: 180px;
-        padding: 0 15px;
-        border-radius: 21px;
-      }
-      .workspace-tab.active-shell { background: #fff; padding: 4px; border-radius: 25px; }
-      .workspace-tab .tab-icon { display: none; }
-      .workspace-tab .count { display: none; }
-      .sidebar-bottom { border-top: 0; padding: 0; margin-top: 0; position: absolute; top: max(10px, env(safe-area-inset-top)); right: 12px; }
-      #addWorkspaceBtn { width: auto; --md-outlined-button-container-height: 40px; }
-
-      .main { min-height: auto; padding: 16px 14px calc(34px + env(safe-area-inset-bottom)); }
-      .main-inner { width: 100%; }
-      .page-head { padding: 0 0 16px; align-items: flex-start; gap: 10px; }
-      .eyebrow { font-size: 11px; margin-bottom: 3px; }
-      .page-title { font-size: 27px; }
-      .page-actions md-filled-button { --md-filled-button-container-height: 40px; }
-      .memo-area { padding: 14px 0; }
-      .memo-box { min-height: 100px; border-radius: 14px; }
-      .links-panel { border-radius: 16px; }
-      .links-head { padding: 10px 10px 10px 14px; }
-      .link-list { padding: 3px 6px 7px; }
-      .link-row { min-height: 66px; padding: 6px 5px 6px 6px; gap: 10px; }
-      .link-icon { width: 38px; height: 38px; flex-basis: 38px; border-radius: 11px; }
-      .link-title { font-size: 14px; }
-      .link-url { font-size: 11px; }
-      #addLinkBtn { --md-outlined-button-container-height: 38px; --md-outlined-button-leading-icon-size: 18px; }
-      .dialog-body { min-width: 0; width: min(100%, 420px); padding-left: 20px; padding-right: 20px; }
-    }
-
-    @media (max-width: 420px) {
-      .page-head { align-items: center; }
-      .page-actions md-filled-button { --md-filled-button-label-text-size: 13px; }
-      .link-url { max-width: 55vw; }
-    }
-  </style>
 </head>
 <body>
   <div class="app">
@@ -302,12 +41,15 @@
     </aside>
 
     <main class="main">
-      <div class="main-inner">
+      <div class="main-inner" id="workspaceView">
         <header class="page-head">
           <div class="page-head-copy">
             <h1 class="page-title" id="workspaceTitle">仕事</h1>
           </div>
           <div class="page-actions">
+            <md-icon-button id="workspaceMenuBtn" aria-label="その他">
+              <span class="material-symbols-outlined">more_vert</span>
+            </md-icon-button>
             <md-filled-button id="launchAllBtn">
               <span class="material-symbols-outlined" slot="icon">open_in_new</span>
               一括起動
@@ -330,6 +72,23 @@
           <div class="link-list" id="linkList"></div>
         </section>
       </div>
+
+      <div class="main-inner" id="overviewView" style="display:none">
+        <p id="overviewGreeting" class="overview-greeting"></p>
+        <div class="overview-meta">
+          <a class="overview-meta-link" href="https://nidele206.github.io/" target="_blank" rel="noopener noreferrer">Nideleシリーズについて</a>
+          <span class="overview-meta-sep">/</span>
+          <a class="overview-meta-link" href="https://nidele206.github.io/policies/" target="_blank" rel="noopener noreferrer">利用規約 および 個人情報処理政策</a>
+        </div>
+        <section class="links-panel">
+          <div class="links-head">
+
+
+            <div class="links-head-title"><strong>上位5件のリンク</strong></div>
+          </div>
+          <div class="link-list" id="overviewContent"></div>
+        </section>
+      </div>
     </main>
   </div>
 
@@ -337,6 +96,23 @@
     <md-menu-item id="menuEdit">編集</md-menu-item>
     <md-menu-item id="menuDelete">削除</md-menu-item>
   </md-menu>
+
+  <md-menu id="workspaceMenu" positioning="fixed">
+    <md-menu-item id="menuWorkspaceEdit">名前を編集</md-menu-item>
+    <md-menu-item id="menuWorkspaceDelete">グループ削除</md-menu-item>
+  </md-menu>
+
+  <!-- Delete confirmation dialog -->
+  <md-dialog id="deleteWorkspaceDialog">
+    <div slot="headline">グループを削除</div>
+    <div slot="content" class="dialog-body">
+      <p>このグループを削除しますか？ この操作は取り消せません。</p>
+    </div>
+    <div slot="actions" class="dialog-actions">
+      <md-text-button id="deleteWorkspaceCancelBtn">キャンセル</md-text-button>
+      <md-filled-button id="deleteWorkspaceConfirmBtn">削除</md-filled-button>
+    </div>
+  </md-dialog>
 
   <!-- Link dialog -->
   <md-dialog id="linkDialog">
@@ -353,7 +129,7 @@
 
   <!-- Workspace dialog -->
   <md-dialog id="workspaceDialog">
-    <div slot="headline">新しい起動ボード</div>
+    <div slot="headline" id="workspaceDialogHeadline">新しい起動ボード</div>
     <div slot="content" class="dialog-body">
       <md-outlined-text-field id="workspaceNameField" label="タイトル" supporting-text="例：仕事、開発、勉強、調査" required></md-outlined-text-field>
     </div>
@@ -363,192 +139,8 @@
     </div>
   </md-dialog>
 
-  <script>
-    const STORAGE_KEY = 'launchboard-v2';
-    const $ = (id) => document.getElementById(id);
-
-    const uid = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(36).slice(2));
-    const defaultData = {
-      workspaces: [
-        { id: uid(), title: '仕事', memo: '', links: [
-          { id: uid(), name: 'Google', url: 'https://www.google.com/' },
-          { id: uid(), name: 'Gmail', url: 'https://mail.google.com/' },
-          { id: uid(), name: 'Google ドライブ', url: 'https://drive.google.com/' },
-          { id: uid(), name: 'Notion', url: 'https://www.notion.so/' }
-        ] },
-        { id: uid(), title: '開発', memo: '', links: [
-          { id: uid(), name: 'GitHub', url: 'https://github.com/' },
-          { id: uid(), name: 'MDN Web Docs', url: 'https://developer.mozilla.org/' }
-        ] },
-        { id: uid(), title: '参考資料', memo: '', links: [] }
-      ],
-      activeWorkspaceId: null
-    };
-    defaultData.activeWorkspaceId = defaultData.workspaces[0].id;
-
-    let state = loadState();
-    let selectedLinkId = null;
-    let editingLinkId = null;
-
-    function loadState() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('launchboard-v1');
-        if (!raw) return structuredClone(defaultData);
-        const parsed = JSON.parse(raw);
-        if (!Array.isArray(parsed.workspaces) || !parsed.workspaces.length) return structuredClone(defaultData);
-        parsed.workspaces.forEach(w => { w.links ||= []; w.memo ||= ''; });
-        parsed.activeWorkspaceId ||= parsed.workspaces[0].id;
-        return parsed;
-      } catch { return structuredClone(defaultData); }
-    }
-    function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-    function activeWorkspace() { return state.workspaces.find(w => w.id === state.activeWorkspaceId) || state.workspaces[0]; }
-    function esc(value) { return String(value).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
-    function favicon(url) {
-      try { return 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(new URL(url).hostname) + '&sz=64'; }
-      catch { return ''; }
-    }
-
-    function render() {
-      const active = activeWorkspace();
-      state.activeWorkspaceId = active.id;
-      $('workspaceTitle').textContent = active.title;
-      $('memo').value = active.memo || '';
-      $('linkCount').textContent = `${active.links.length}件`;
-
-      $('workspaceList').innerHTML = state.workspaces.map(w => {
-        const activeClass = w.id === active.id ? 'active' : '';
-        const shell = w.id === active.id ? 'active-shell' : '';
-        return `<div class="${shell}">
-          <button class="workspace-tab ${activeClass}" type="button" data-workspace-id="${w.id}">
-            <span class="material-symbols-outlined tab-icon">folder</span>
-            <span class="tab-name">${esc(w.title)}</span>
-            <span class="count">${w.links.length}</span>
-          </button>
-        </div>`;
-      }).join('');
-
-      if (!active.links.length) {
-        $('linkList').innerHTML = `
-          <div class="empty">
-            <div class="empty-icon"><span class="material-symbols-outlined">link</span></div>
-            <strong>リンクを追加しましょう</strong>
-            <p>毎日開くサイトやダッシュボードを登録すると、ここからまとめて起動できます。</p>
-            <md-filled-button id="emptyAddBtn">リンクを追加</md-filled-button>
-          </div>`;
-        $('emptyAddBtn').addEventListener('click', () => openLinkDialog());
-      } else {
-        $('linkList').innerHTML = active.links.map(link => `
-          <div class="link-row" data-link-id="${link.id}">
-            <div class="link-icon"><img src="${esc(favicon(link.url))}" alt="" width="22" height="22" loading="lazy" onerror="this.style.display='none'"></div>
-            <div class="link-main" data-open="${link.id}" title="新しいタブで開く">
-              <div class="link-title">${esc(link.name)}</div>
-              <div class="link-url">${esc(link.url)}</div>
-            </div>
-            <div class="row-actions">
-              <md-icon-button class="menu-button" data-menu="${link.id}" aria-label="その他">
-                <span class="material-symbols-outlined">more_vert</span>
-              </md-icon-button>
-            </div>
-          </div>
-        `).join('');
-        $('linkList').querySelectorAll('[data-open]').forEach(el => el.addEventListener('click', () => openLink(el.dataset.open)));
-        $('linkList').querySelectorAll('[data-menu]').forEach(el => el.addEventListener('click', e => openRowMenu(e, el.dataset.menu)));
-      }
-
-      document.querySelectorAll('[data-workspace-id]').forEach(el => {
-        el.addEventListener('click', () => { state.activeWorkspaceId = el.dataset.workspaceId; render(); });
-      });
-      saveState();
-    }
-
-    function normalizeUrl(v) { return /^https?:\/\//i.test(v) ? v : `https://${v}`; }
-    function openLink(id) {
-      const link = activeWorkspace().links.find(l => l.id === id);
-      if (!link) return;
-      window.open(normalizeUrl(link.url), '_blank', 'noopener,noreferrer');
-    }
-    async function showDialog(dialog) { if (dialog.updateComplete) await dialog.updateComplete; dialog.show(); }
-    function closeDialog(dialog) { dialog.close(); }
-
-    function openRowMenu(event, id) {
-      event.stopPropagation();
-      selectedLinkId = id;
-      const menu = $('rowMenu');
-      menu.anchorElement = event.currentTarget;
-      menu.show();
-    }
-
-    $('menuEdit').addEventListener('click', () => {
-      const link = activeWorkspace().links.find(l => l.id === selectedLinkId);
-      if (link) openLinkDialog(link);
-      $('rowMenu').close();
-    });
-    $('menuDelete').addEventListener('click', () => {
-      const active = activeWorkspace();
-      active.links = active.links.filter(l => l.id !== selectedLinkId);
-      selectedLinkId = null;
-      saveState();
-      render();
-      $('rowMenu').close();
-    });
-
-    function openLinkDialog(link = null) {
-      editingLinkId = link ? link.id : null;
-      $('linkDialogTitle').textContent = link ? 'リンクを編集' : 'リンクを追加';
-      $('nameField').value = link?.name || '';
-      $('urlField').value = link?.url || '';
-      showDialog($('linkDialog'));
-      setTimeout(() => $('nameField').focus(), 80);
-    }
-
-    $('linkSaveBtn').addEventListener('click', () => {
-      const name = String($('nameField').value || '').trim();
-      const urlInput = String($('urlField').value || '').trim();
-      if (!name || !urlInput) return;
-      const url = normalizeUrl(urlInput);
-      const active = activeWorkspace();
-      if (editingLinkId) {
-        const link = active.links.find(l => l.id === editingLinkId);
-        if (link) { link.name = name; link.url = url; }
-      } else {
-        active.links.push({ id: uid(), name, url });
-      }
-      saveState();
-      closeDialog($('linkDialog'));
-      render();
-    });
-    $('linkCancelBtn').addEventListener('click', () => closeDialog($('linkDialog')));
-    $('addLinkBtn').addEventListener('click', () => openLinkDialog());
-
-    $('addWorkspaceBtn').addEventListener('click', () => {
-      $('workspaceNameField').value = '';
-      showDialog($('workspaceDialog'));
-      setTimeout(() => $('workspaceNameField').focus(), 80);
-    });
-    $('workspaceCancelBtn').addEventListener('click', () => closeDialog($('workspaceDialog')));
-    $('workspaceSaveBtn').addEventListener('click', () => {
-      const title = String($('workspaceNameField').value || '').trim();
-      if (!title) return;
-      const workspace = { id: uid(), title, memo: '', links: [] };
-      state.workspaces.push(workspace);
-      state.activeWorkspaceId = workspace.id;
-      saveState();
-      closeDialog($('workspaceDialog'));
-      render();
-    });
-
-    $('launchAllBtn').addEventListener('click', () => {
-      activeWorkspace().links.forEach((link, index) => setTimeout(() => openLink(link.id), index * 80));
-    });
-    $('memo').addEventListener('input', () => {
-      activeWorkspace().memo = $('memo').value;
-      saveState();
-    });
-
-    render();
-  </script>
-  <!-- Google tag (gtag.js) -->
+   <script src="app.js"></script>
+   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SCNW6MLLLT"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
